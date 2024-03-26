@@ -10,13 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-from datetime import timedelta
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,13 +52,21 @@ INSTALLED_APPS = [
      "corsheaders"
 ]
 
+AUTH_USER_MODEL = "api.User"
+
 REST_FRAMEWORK = {
-    
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_FILTER_BACKENDS':[
+
+        'rest_framework.filters.SearchFilter',
+    ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        
     )
+    
 }
 
 
