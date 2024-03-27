@@ -71,12 +71,14 @@ def userDetails(request,pk):
 def userUpdate(request,pk):
     try:
         data=request.data
+       
         user=User.objects.get(id=pk)
         serializer=UserSerializer(user,data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         else:
+            print('error is hereeee')
             return Response(serializer.errors,status= status.HTTP_400_BAD_REQUEST)
     except User.DoesNotExist:
         return Response("User not found!",status=status.HTTP_404_NOT_FOUND)
